@@ -66,6 +66,7 @@ $(function(){
 				},
 				dataType: 'jsonp',
 				success: function(data){
+					forecastArray = [];
 					forecastArray.push(data);
 				},
 				type: 'GET'
