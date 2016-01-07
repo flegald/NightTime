@@ -30,6 +30,7 @@ body {
 
 #button {
 	width: 200px;
+	cursor: pointer;
 }
 
 #imgContainer {
@@ -54,4 +55,38 @@ td {
 }
 
 
+@media screen and (min-width: 762px){
+
+	#map {
+		margin-left: 100px;
+	}
+
+	#map {
+		display: inline-block;
+	}
+
+	#current {
+		display: inline-block;
+		margin-left: 100px;
+		padding: 20px;
+		position: relative;
+		top: -60px;
+	}
+
+	#mediaSection {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	#button {
+		position: relative;
+		top: -116px;
+	}
+
+	#hour {
+		position: relative;
+		top: -130px;
+	}
+
+}
 
