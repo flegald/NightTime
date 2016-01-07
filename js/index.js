@@ -141,6 +141,8 @@ $(function(){
 
 		$('#button').on('click', function(){
 			$('#hour').slideToggle();
+			$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+
 		});
 
 		window.onload = getForecast(darkSea);
