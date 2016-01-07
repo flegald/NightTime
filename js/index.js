@@ -17,6 +17,7 @@ var darkCascades = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd84
 
 $(function(){
 	$('#hour').hide();
+	$('#button').hide();
 });
 // Map Functionality
 
@@ -122,6 +123,7 @@ $(function(){
 
 		$('#userLocation').on('change', function(){
 			var userChoice = $(this).val();
+			$('#button').show();
 			if (userChoice === 'nothing'){
 			getForecast(darkSea);
 			$('#place').text("Seattle");
@@ -142,6 +144,7 @@ $(function(){
 		});
 
 		window.onload = getForecast(darkSea);
+		
 
 
 
