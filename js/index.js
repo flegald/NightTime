@@ -9,8 +9,15 @@
 	var rainLng = -121.6973877;
 	var northCascadeLat = 48.771817;
 	var northCascadeLng = -121.298465;
+// Darksy api links
+var darkSea = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/47.6097, -122.3331";
+var darkLake = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/47.811389, -120.727778";
+var darkRain = 	"https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/46.8996733, -121.6973877";
+var darkCascades = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/48.771817, -121.298465";
 
-	
+$(function(){
+	$('#hour').hide();
+});
 // Map Functionality
 
 	function initMap(latitude, longitude){		
@@ -42,7 +49,9 @@
 
 $(function(){
 
-	forecastArray = [];
+	var forecastArray = [];
+	var hourlyArray = [];
+	var timeArray = [];
 
 	function templatePush(){
 			$.get('template/forecast.html', function(data){
@@ -52,31 +61,92 @@ $(function(){
 					var handPush = compTemp(forecastArray[i]);
 					$('#forecast').append(handPush);
 				}
-			})
+			});
+	};
+
+	function hourlyPush(){
+			$.get('template/hourly.html', function(data){
+				createHourly();
+				convertTime();
+				$('#hourTable').empty();
+
+				$('#hourTable').prepend("<tr><td>Time</td><td>Temp</td><td>Cloud Cov</td><td>Vis</td><td>Summary</td></tr>");
+
+				for (i = 0; i < 10; i ++){
+					var compTemp = Handlebars.compile(data);
+					var handPush = compTemp(hourlyArray[i]);
+					$('#hourTable').append(handPush);
+				}
+				console.log(hourlyArray);
+		});
 	}
 
-	$('#userLocation').on('change', function(){
-			$.ajax({
-				url: "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/47.6097, -122.3331",
-				data: {
-					format: 'json'
-				},
-				error: function(){
-					alert('no go');
-				},
-				dataType: 'jsonp',
-				success: function(data){
-					forecastArray = [];
-					forecastArray.push(data);
-				},
-				type: 'GET'
-			});
-			templatePush();
+	function createHourly(){
+		hourlyArray = [];
+		for (i = 1; i < 20; i ++){
+			hourlyArray.push(forecastArray[0].hourly.data[i]);
+			}
+		};
+
+	function convertTime(){
+		hourlyArray.forEach(function(hours){
+			var tempTime = new Date(hours.time * 1000);
+			var hour = tempTime.getHours();
+			var mins = tempTime.getMinutes();
+			var newTime = hour + ":00";
+			hours.time = newTime;
 		});
+	};
+
+
+	function getForecast(option){
+				$.ajax({
+					url: option,
+					data: {
+						format: 'json'
+					},
+					error: function(){
+						alert('failed to load resources');
+					},
+					dataType: 'jsonp',
+					success: function(data){
+						forecastArray = [];
+						forecastArray.push(data);
+						console.log(forecastArray);
+					},
+					type: 'GET'
+				});
+				templatePush();
+				hourlyPush();
+		};
+
+		$('#userLocation').on('change', function(){
+			var userChoice = $(this).val();
+			if (userChoice === 'nothing'){
+			getForecast(darkSea);
+			$('#place').text("Seattle");
+				} else if (userChoice === 'lakeWenatchee'){
+			getForecast(darkLake);
+			$('#place').text("Lake Wenatchee State Park");
+				} else if (userChoice === 'mtRainier'){
+			getForecast(darkLake);
+			$('#place').text("Mt. Rainier National Park");
+				} else if (userChoice === 'northCascades'){
+			getForecast(darkLake);
+			$('#place').text("North Cascades National Park");
+			}
+		});
+
+		$('#button').on('click', function(){
+			$('#hour').slideToggle();
+		});
+
+		window.onload = getForecast(darkSea);
+
 
 
 });
-
+	
 	
 
 
