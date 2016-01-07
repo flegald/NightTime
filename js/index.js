@@ -23,6 +23,7 @@ var darkRat = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413
 $(function(){
 	$('#hour').hide();
 	$('#button').hide();
+	$('#about').hide();
 });
 
 // Map Functionality
@@ -63,7 +64,7 @@ $(function(){
 		}
 	});
 
-	// Darksy API/Ajax calls
+	// Darksy API/Ajax calls/ Handlebars
 
 $(function(){
 
@@ -168,6 +169,15 @@ $(function(){
 
 		});	
 		window.onload = getForecast(darkSea);
+
+
+	// About Page
+	$('#aboutText').on('click', function(){
+		$('#about').fadeToggle();
+	});
+	$('#close').on('click', function(){
+		$('#about').fadeToggle();
+	});
 });
 
 	
