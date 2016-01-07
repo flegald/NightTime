@@ -9,23 +9,36 @@
 	var rainLng = -121.6973877;
 	var northCascadeLat = 48.771817;
 	var northCascadeLng = -121.298465;
+	var ephLat = 47.317639;
+	var ephLng = -119.553649;
+	var ratLat = 47.445825;
+	var ratLng = -121.794994;
 // Darksy api links
 var darkSea = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/47.6097, -122.3331";
+var darkEphrata = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/47.317639, -119.553649";
 var darkLake = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/47.811389, -120.727778";
 var darkRain = 	"https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/46.8996733, -121.6973877";
 var darkCascades = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/48.771817, -121.298465";
-
+var darkRat = "https://api.forecast.io/forecast/7e0ef57fc2466bdf0cb7ed9fd8480413/47.445825, -121.794994";
 $(function(){
 	$('#hour').hide();
 	$('#button').hide();
 });
+
 // Map Functionality
 
 	function initMap(latitude, longitude){		
 		var mapBegin = {
     center:new google.maps.LatLng(latitude, longitude),
-    zoom: 10,
-    disableDefaultUI : true
+    zoom: 12,
+    disableDefaultUI: true,
+    zoomControl: true,
+    zoomControlOptions: {
+     position: google.maps.ControlPosition.RIGHT_CENTER
+    },
+  	scaleControl: false,
+  	scrollwheel: false,
+  	disableDoubleClickZoom: true,
   	};
   	var map = new google.maps.Map(document.getElementById('map'), mapBegin);
   };
@@ -37,12 +50,16 @@ $(function(){
 		var option = document.getElementById('userLocation').value;
 		if (option === 'nothing'){
 			initMap(seaLat, seaLng);
+		} else if (option === 'ephrata'){
+			initMap(ephLat, ephLng);
 		} else if (option === 'lakeWenatchee'){
 			initMap(lakeWLat, lakeWLng);
 		} else if (option === 'mtRainier'){
 			initMap(rainLat, rainLng);
 		} else if (option === 'northCascades'){
 			initMap(northCascadeLat, northCascadeLng);
+		} else if (option === 'rattleSnake') {
+			initMap(ratLat, ratLng);
 		}
 	});
 
@@ -52,7 +69,6 @@ $(function(){
 
 	var forecastArray = [];
 	var hourlyArray = [];
-	var timeArray = [];
 
 	function templatePush(){
 			$.get('template/forecast.html', function(data){
@@ -62,6 +78,7 @@ $(function(){
 					var handPush = compTemp(forecastArray[i]);
 					$('#forecast').append(handPush);
 				}
+				
 			});
 	};
 
@@ -114,43 +131,45 @@ $(function(){
 						forecastArray = [];
 						forecastArray.push(data);
 						console.log(forecastArray);
+						templatePush();
+						hourlyPush();
 					},
 					type: 'GET'
 				});
-				templatePush();
-				hourlyPush();
 		};
 
 		$('#userLocation').on('change', function(){
 			var userChoice = $(this).val();
 			$('#button').show();
-			if (userChoice === 'nothing'){
-			getForecast(darkSea);
-			$('#place').text("Seattle");
+				if (userChoice === 'nothing'){
+					getForecast(darkSea);
+					$('#place').text("Seattle");
+				} else if (userChoice === 'ephrata') {
+					getForecast(darkEphrata);
+					$('#place').text("Ephrata");
 				} else if (userChoice === 'lakeWenatchee'){
-			getForecast(darkLake);
-			$('#place').text("Lake Wenatchee State Park");
+					getForecast(darkLake);
+					$('#place').text("Lake Wenatchee State Park");
 				} else if (userChoice === 'mtRainier'){
-			getForecast(darkLake);
-			$('#place').text("Mt. Rainier National Park");
+					getForecast(darkLake);
+					$('#place').text("Mt. Rainier National Park");
 				} else if (userChoice === 'northCascades'){
-			getForecast(darkLake);
-			$('#place').text("North Cascades National Park");
-			}
+					getForecast(darkLake);
+					$('#place').text("North Cascades National Park");
+				} else if (userChoice === 'rattleSnake'){
+					getForecast(darkRat);
+					$('#place').text("Rattlesnake Ridge");
+				}
 		});
 
 		$('#button').on('click', function(){
 			$('#hour').slideToggle();
 			$("html, body").animate({ scrollTop: $(document).height() }, 1000);
 
-		});
-
+		});	
 		window.onload = getForecast(darkSea);
-		
-
-
-
 });
+
 	
 	
 

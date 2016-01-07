@@ -31,13 +31,16 @@ body {
 #button {
 	width: 200px;
 	cursor: pointer;
+	position: relative;
+	top: -15px;
+	padding-left: 15px;
 }
 
 #imgContainer {
 	width: 230px;
 	margin-right: auto;
 	margin-left: auto;
-	margin-top: 20px;
+	margin-top: -30px;
 }
 
 #hourTable {
@@ -48,6 +51,8 @@ body {
 	margin-right: auto;
 	width: 370px;
 	text-align: center;
+	position: relative;
+	top: -60px;
 }
 
 td {
