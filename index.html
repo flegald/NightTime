@@ -1,9 +1,12 @@
 <DOCTYPE! html>
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script	
    src="https://maps.googleapis.com/maps/api/js"></script>
 	<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="CSS/Main.css">
 	<title>Night Time</title>
 </head>
@@ -28,7 +31,17 @@
 		<div id="map"></div>
 	</section>
 
-	<section id="forecast">
+	<section id="current">
+		<h3 id="place"></h3>
+		<section id="forecast">
+		</section>
+	</section>
+
+	<div id="imgContainer"><img id="button" src="img/button.png">
+	</div>
+	<section id="hour">
+		<table id="hourTable">
+		</table>
 	</section>
 
 	<script type="text/javascript" src="js/index.js"></script>

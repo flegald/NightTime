@@ -1,11 +1,13 @@
 body {
 	background-image: url("../img/background.jpg");
 	color: #E6DEDC; 
+	font-family: 'Abel', sans-serif;
 }
 
 #header {
 	text-align: center;
 	font-family: 'Poiret One', cursive;
+
 }
 
 #map{
@@ -21,3 +23,34 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+#current {
+	text-align: center;
+}
+
+#button {
+	width: 200px;
+}
+
+#imgContainer {
+	width: 230px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#hourTable {
+	border: 2px solid black;
+	background: white;
+	color: black;
+	margin-left: auto;
+	margin-right: auto;
+	width: 370px;
+	text-align: center;
+}
+
+td {
+	border-bottom: 1px solid black;
+}
+
+
+
